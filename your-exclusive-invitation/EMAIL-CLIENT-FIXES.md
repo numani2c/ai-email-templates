@@ -71,14 +71,17 @@
 
 ### ✅ 4. Button Color and Rendering Issues
 
-**Problem:** Buttons not rendering correctly in Outlook (background color missing or incorrect).
+**Problem:** Buttons not rendering correctly in Outlook and Outlook.com - background color missing, incorrect, or appearing darker than expected.
+
+**Root Cause:** First "Reserve Your Spot" button was missing VML fallback pattern, causing Outlook.com (Explorer) to display incorrect darker color instead of proper blue (#1434cb).
 
 **Solution:**
-- Added VML (Vector Markup Language) fallback for Outlook
-- Buttons now use bulletproof button technique
-- Works in Outlook 2007/2010/2013/2016/365 and all modern clients
+- Added VML (Vector Markup Language) fallback to BOTH "Reserve Your Spot" buttons
+- Enhanced "Explore Accelerate Awards" button with VML pattern
+- All buttons now use bulletproof button technique
+- Works in Outlook 2007/2010/2013/2016/365, Outlook.com, and all modern clients
 
-**Before:**
+**Before (Missing VML - caused darker color):**
 ```html
 <table><tr>
   <td style="background-color: #1434cb; padding: 12px 20px;">
@@ -87,23 +90,40 @@
 </tr></table>
 ```
 
-**After (Bulletproof):**
+**After (Bulletproof with VML - correct color):**
 ```html
 <!--[if mso]>
-<v:roundrect href="#" style="height:44px;width:200px;" fillcolor="#1434cb">
-  <center style="color:#ffffff;">Reserve Your Spot →</center>
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" 
+             href="#" 
+             style="height:44px;v-text-anchor:middle;width:200px;" 
+             arcsize="11%" 
+             strokecolor="#1434cb" 
+             fillcolor="#1434cb">
+  <w:anchorlock/>
+  <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">
+    Reserve Your Spot →
+  </center>
 </v:roundrect>
 <![endif]-->
 <!--[if !mso]><!-->
-<table><tr>
-  <td style="background-color: #1434cb; padding: 12px 20px;">
-    <a href="#" style="color: #ffffff;">Reserve Your Spot →</a>
-  </td>
-</tr></table>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
+  <tr>
+    <td style="background-color: #1434cb; border: 1px solid #1434cb; border-radius: 5px; padding: 12px 20px; text-align: center;">
+      <a href="#" style="display: inline-block; font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; line-height: 20px; color: #ffffff; text-decoration: none;">
+        Reserve Your Spot →
+      </a>
+    </td>
+  </tr>
+</table>
 <!--<![endif]-->
 ```
 
-**Impact:** Both "Reserve Your Spot" buttons now render correctly in all email clients with proper blue background (#1434cb).
+**Buttons Fixed:**
+1. ✅ **First "Reserve Your Spot" button** (header section) - Added VML pattern
+2. ✅ **Second "Reserve Your Spot" button** (closing section) - Already had VML, verified correct
+3. ✅ **"Explore Accelerate Awards" button** - Enhanced with VML pattern
+
+**Impact:** All three buttons now render correctly in Outlook, Outlook.com, and all other email clients with proper blue background (#1434cb) and white text. No more darker color appearance in Outlook.com.
 
 ---
 
