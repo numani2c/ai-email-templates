@@ -746,6 +746,21 @@ Before marking conversion complete:
 - [ ] **Tokens:** Token usage summary provided
 - [ ] **Summary:** Showed completion summary with next steps
 
+**Email Client Compatibility (CRITICAL):**
+- [ ] **Font Consistency:** Added `font-family: Arial, Helvetica, sans-serif;` to EVERY text element inline
+- [ ] **Body Font:** Body tag includes font-family declaration
+- [ ] **Bulletproof Buttons:** All buttons use VML pattern with `<!--[if mso]>` conditional comments
+- [ ] **Button Fonts:** Font-family declared in both VML and HTML button versions
+- [ ] **GIF Fallbacks:** All GIFs have Outlook conditional fallback (`<!--[if mso]>`)
+- [ ] **No SVG Images:** Replaced all SVG with CSS shapes or PNG images
+- [ ] **CSS Bullets:** Triangles/bullets use CSS borders (not `<img src="triangle.svg">`)
+- [ ] **Image Dimensions:** ALL images have explicit width/height attributes AND inline styles
+- [ ] **No height:auto:** No images use `height: auto` (causes stretching)
+- [ ] **Image Alt Text:** All images have descriptive alt text
+- [ ] **Gmail Fixes:** Added `class="body"` and Gmail-specific CSS
+- [ ] **VML Namespaces:** HTML tag includes xmlns:v and xmlns:o for Outlook
+- [ ] **Outlook Comments:** Added `<!--[if mso]>` Office Document Settings in head
+
 ---
 
 ## 📁 Repository Structure
@@ -1953,6 +1968,360 @@ Before generating HTML, verify:
 ```
 
 **Reference:** [EMAIL_CONVERSION_PROMPT.md](./EMAIL_CONVERSION_PROMPT.md) for complete patterns
+
+---
+
+### Step 3A: 🛡️ EMAIL CLIENT COMPATIBILITY REQUIREMENTS
+
+**⚠️ CRITICAL: These requirements MUST be implemented in EVERY email template to ensure cross-client compatibility.**
+
+#### 1. ✅ Font Consistency (MANDATORY)
+
+**Problem:** Fonts render inconsistently across email clients without explicit declarations.
+
+**Solution: Add `font-family: Arial, Helvetica, sans-serif;` to EVERY text element inline**
+
+**❌ WRONG - Missing font-family:**
+```html
+<td style="font-size: 16px; line-height: 24px; color: #000000;">
+  Hello [Name]
+</td>
+```
+
+**✅ CORRECT - Font-family declared:**
+```html
+<td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000000;">
+  Hello [Name]
+</td>
+```
+
+**Required on ALL:**
+- `<body>` tag
+- All `<td>` elements with text
+- All `<p>`, `<h1>`, `<h2>`, etc. tags
+- All `<a>` links
+- All button text
+- All inline text elements
+
+**Implementation Checklist:**
+- [ ] Body tag has font-family
+- [ ] Every table cell with text has font-family
+- [ ] All paragraphs have font-family
+- [ ] All headings have font-family
+- [ ] All links have font-family
+- [ ] Button text has font-family
+
+---
+
+#### 2. ✅ Bulletproof Buttons with VML (MANDATORY)
+
+**Problem:** Outlook renders buttons incorrectly without VML fallback - wrong colors, missing backgrounds.
+
+**Solution: Use bulletproof button pattern with Outlook VML**
+
+**❌ WRONG - Simple button (breaks in Outlook):**
+```html
+<table role="presentation" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background-color: #1434cb; padding: 12px 20px; border-radius: 5px;">
+      <a href="#" style="color: #ffffff; text-decoration: none;">Click Here</a>
+    </td>
+  </tr>
+</table>
+```
+
+**✅ CORRECT - Bulletproof button with VML:**
+```html
+<!--[if mso]>
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" 
+             href="#" 
+             style="height:44px;v-text-anchor:middle;width:200px;" 
+             arcsize="11%" 
+             strokecolor="#1434cb" 
+             fillcolor="#1434cb">
+  <w:anchorlock/>
+  <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">
+    Click Here →
+  </center>
+</v:roundrect>
+<![endif]-->
+<!--[if !mso]><!-->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="background-color: #1434cb; border: 1px solid #1434cb; border-radius: 5px; padding: 12px 20px; text-align: center;">
+      <a href="#" style="display: inline-block; font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; line-height: 20px; color: #ffffff; text-decoration: none;">
+        Click Here →
+      </a>
+    </td>
+  </tr>
+</table>
+<!--<![endif]-->
+```
+
+**Button Requirements:**
+- ✅ VML `<v:roundrect>` for Outlook
+- ✅ Standard HTML table for other clients
+- ✅ Conditional comments `<!--[if mso]>` and `<!--[if !mso]>`
+- ✅ Font-family in both VML and HTML versions
+- ✅ Explicit height and width in VML
+- ✅ Same background color in both versions
+
+**Apply to:**
+- All CTA buttons
+- All action buttons
+- All "click here" links styled as buttons
+
+---
+
+#### 3. ✅ GIF Support with Outlook Fallbacks
+
+**Problem:** Outlook 2007-2016 doesn't support animated GIFs (shows blank or broken).
+
+**Solution: Use conditional comments for GIF fallbacks**
+
+**Option A: Show static first frame in Outlook (Recommended)**
+```html
+<!--[if !mso]><!-->
+<img src="banner.gif" alt="Banner" width="600" height="230" 
+     style="display: block; width: 600px; height: 230px;">
+<!--<![endif]-->
+<!--[if mso]>
+<img src="banner.gif" alt="Banner" width="600" height="230" 
+     style="display: block; width: 600px; height: 230px;">
+<![endif]-->
+```
+
+**Option B: Use static PNG fallback in Outlook (Best compatibility)**
+```html
+<!--[if !mso]><!-->
+<img src="banner.gif" alt="Banner" width="600" height="230" 
+     style="display: block; width: 600px; height: 230px;">
+<!--<![endif]-->
+<!--[if mso]>
+<img src="banner-static.png" alt="Banner" width="600" height="230" 
+     style="display: block; width: 600px; height: 230px;">
+<![endif]-->
+```
+
+**GIF Requirements:**
+- ✅ Always provide Outlook fallback
+- ✅ Use `<!--[if mso]>` conditional comments
+- ✅ Keep first frame of GIF as meaningful image (not loading state)
+- ✅ Consider providing static PNG alternative
+- ✅ Test in Outlook 2016/2019 to verify fallback works
+
+**Apply to:**
+- All animated GIFs (banners, videos, illustrations)
+- Any GIF that's essential to email design
+
+---
+
+#### 4. ✅ CSS-Based Shapes Instead of SVG (MANDATORY)
+
+**Problem:** SVG images not supported in Gmail, Outlook, and many other email clients.
+
+**Solution: Replace ALL SVG with CSS-based shapes**
+
+**Common Use Case: Bullet Points / Triangles**
+
+**❌ WRONG - SVG image (breaks in Gmail, Outlook):**
+```html
+<img src="triangle.svg" alt="" width="6" height="24" 
+     style="display: block; width: 6px; height: 24px;">
+```
+
+**✅ CORRECT - CSS triangle:**
+```html
+<div style="width: 0; height: 0; border-left: 6px solid #ff6b35; border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
+```
+
+**CSS Shape Patterns:**
+
+**Triangle pointing right:**
+```html
+<div style="width: 0; height: 0; border-left: 6px solid #ff6b35; border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
+```
+
+**Circle/Dot:**
+```html
+<div style="width: 8px; height: 8px; border-radius: 50%; background-color: #1434cb;"></div>
+```
+
+**Square:**
+```html
+<div style="width: 6px; height: 6px; background-color: #ff6b35;"></div>
+```
+
+**Horizontal line/divider:**
+```html
+<div style="height: 1px; background-color: #e0e0e0; width: 100%;"></div>
+```
+
+**SVG Replacement Rules:**
+- ❌ **NEVER use** `<img src="file.svg">`
+- ❌ **NEVER use** inline SVG `<svg>` tags
+- ✅ **ALWAYS use** CSS borders and backgrounds
+- ✅ **ALWAYS use** simple HTML + CSS shapes
+- ✅ **Convert** SVG icons/shapes to CSS or PNG images
+
+**Alternative: PNG Images**
+For complex shapes that can't be created with CSS, use PNG images instead of SVG.
+
+---
+
+#### 5. ✅ Image Loading Optimization
+
+**Problem:** Images not loading in Gmail or other clients due to missing attributes or incorrect URLs.
+
+**Solution: Explicit dimensions, alt text, and proper attributes on ALL images**
+
+**❌ WRONG - Missing attributes:**
+```html
+<img src="logo.png" alt="Logo">
+```
+
+**✅ CORRECT - Complete attributes:**
+```html
+<img src="https://cdn.example.com/logo.png" 
+     alt="Company Logo" 
+     width="200" 
+     height="50" 
+     style="display: block; width: 200px; height: 50px;">
+```
+
+**Image Requirements (EVERY image):**
+- ✅ `src=""` - Absolute HTTPS URL (no relative paths)
+- ✅ `alt=""` - Descriptive alt text (never empty)
+- ✅ `width=""` - Explicit width attribute (pixels)
+- ✅ `height=""` - Explicit height attribute (pixels)
+- ✅ `style="display: block;"` - Prevents spacing issues
+- ✅ `style="width: Xpx; height: Ypx;"` - Inline dimensions
+- ❌ **NEVER use** `height: auto` (causes stretching)
+
+**Gmail-Specific Fixes:**
+```html
+<body class="body" style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;">
+```
+
+**Add to `<style>` block:**
+```css
+/* Force Gmail to display emails at full width */
+u + .body .gmail-fix { display: none; }
+```
+
+---
+
+#### 6. ✅ Email Client Compatibility Checklist
+
+**Before generating HTML, ensure:**
+
+**HEAD Section:**
+- [ ] `xmlns:v="urn:schemas-microsoft-com:vml"` for VML support
+- [ ] `xmlns:o="urn:schemas-microsoft-com:office:office"` for Outlook
+- [ ] Outlook conditional comments for `<o:OfficeDocumentSettings>`
+- [ ] CSS reset in `<style>` block
+- [ ] Font-family declared in body style
+- [ ] Gmail-specific CSS fixes included
+
+**Fonts:**
+- [ ] `font-family: Arial, Helvetica, sans-serif;` on body
+- [ ] `font-family` on EVERY text element inline
+- [ ] Consistent font across all modules
+
+**Buttons:**
+- [ ] VML fallback for Outlook (`<!--[if mso]>`)
+- [ ] Standard HTML for other clients (`<!--[if !mso]>`)
+- [ ] Same colors in both versions
+- [ ] Font-family in button text
+
+**Images:**
+- [ ] All images have explicit `width` and `height` attributes
+- [ ] All images have `style="display: block; width: Xpx; height: Ypx;"`
+- [ ] All images have descriptive `alt` text
+- [ ] No `height: auto` anywhere
+- [ ] GIFs have Outlook fallbacks with `<!--[if mso]>`
+
+**Shapes/Icons:**
+- [ ] No SVG images (`<img src="file.svg">`)
+- [ ] Bullets/triangles use CSS borders
+- [ ] Simple shapes use CSS (divs with borders/backgrounds)
+- [ ] Complex icons use PNG images (not SVG)
+
+**Layout:**
+- [ ] Table-based layout only (no divs for structure)
+- [ ] `padding` for spacing (not `margin`)
+- [ ] `cellpadding="0" cellspacing="0" border="0"` on all tables
+- [ ] `role="presentation"` on all layout tables
+
+**Testing Priority:**
+- [ ] Gmail (desktop and mobile app)
+- [ ] Outlook 2016/2019/365 (Windows)
+- [ ] Outlook.com (webmail)
+- [ ] Apple Mail (iPhone, iPad, Mac)
+- [ ] Yahoo Mail
+- [ ] Samsung Email (Android)
+
+---
+
+#### 7. 🚨 Common Mistakes to Avoid
+
+**❌ NEVER DO:**
+1. **Skip font-family declarations** - Causes inconsistent rendering
+2. **Use simple buttons without VML** - Breaks in Outlook
+3. **Use SVG images** - Not supported in most email clients
+4. **Use `height: auto` on images** - Causes stretching
+5. **Forget image dimensions** - Images won't load properly
+6. **Skip alt text** - Accessibility issues and broken image placeholders
+7. **Use external CSS files** - Not supported, must inline
+8. **Use JavaScript** - Stripped by email clients
+9. **Use `<div>` for layout** - Use `<table>` instead
+10. **Forget Gmail-specific fixes** - Images may not load
+
+**✅ ALWAYS DO:**
+1. **Add `font-family` to EVERY text element** - Consistency across clients
+2. **Use bulletproof buttons with VML** - Works in Outlook
+3. **Replace SVG with CSS shapes or PNG** - Universal support
+4. **Explicit dimensions on all images** - Proper rendering
+5. **Use absolute HTTPS URLs** - Images load correctly
+6. **Include descriptive alt text** - Accessibility and fallback
+7. **Inline all CSS** - Email client requirement
+8. **Use table-based layouts** - Best compatibility
+9. **Test in multiple clients** - Verify rendering
+10. **Add Outlook conditional comments** - VML and fallbacks
+
+---
+
+#### 8. 📋 Email Client Compatibility Testing Checklist
+
+**Desktop Email Clients:**
+- [ ] Outlook 2016/2019/365 (Windows) - Test VML buttons, GIFs
+- [ ] Outlook 2011/2016 (Mac) - Test rendering
+- [ ] Apple Mail (Mac) - Test all features
+- [ ] Thunderbird - Basic rendering
+- [ ] Windows Mail - Basic rendering
+
+**Webmail Clients:**
+- [ ] Gmail (Chrome, Firefox, Safari) - Test images, fonts
+- [ ] Outlook.com (all browsers) - Test buttons, layout
+- [ ] Yahoo Mail - Test compatibility
+- [ ] Apple iCloud Mail - Test rendering
+
+**Mobile Email Clients:**
+- [ ] Gmail App (Android) - Test images, fonts, layout
+- [ ] Gmail App (iOS) - Test images, fonts, layout
+- [ ] Apple Mail (iPhone/iPad) - Test all features
+- [ ] Outlook App (Android) - Test buttons, GIFs
+- [ ] Outlook App (iOS) - Test buttons, GIFs
+- [ ] Samsung Email (Android) - Basic check
+
+**Feature-Specific Tests:**
+- [ ] Fonts render consistently (Arial across all clients)
+- [ ] Buttons show correct colors (blue background, white text)
+- [ ] GIFs display or fallback properly in Outlook
+- [ ] CSS triangles/bullets show correctly (not SVG)
+- [ ] All 25+ images load without placeholder icons
+- [ ] Layout maintains 600px width on desktop
+- [ ] No broken images or missing content
 
 ---
 
