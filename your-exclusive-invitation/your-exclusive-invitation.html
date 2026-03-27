@@ -23,14 +23,17 @@
     body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
     table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
     img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; display: block; }
-    body { margin: 0; padding: 0; width: 100%; }
+    body { margin: 0; padding: 0; width: 100%; font-family: Arial, Helvetica, sans-serif; }
     
     /* Link colors */
     a { color: #1434cb; text-decoration: none; }
     a:hover { text-decoration: underline; }
+    
+    /* Force Gmail to display emails at full width */
+    u + .body .gmail-fix { display: none; }
   </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+<body class="body" style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, Helvetica, sans-serif;">
   
   <!-- Preview Text -->
   <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">
@@ -74,7 +77,7 @@
                 
                 <!-- Subheading -->
                 <tr>
-                  <td align="center" style="padding-bottom: 24px; font-size: 18px; line-height: 24px; color: #000000;">
+                  <td align="center" style="padding-bottom: 24px; font-family: Arial, Helvetica, sans-serif; font-size: 18px; line-height: 24px; color: #000000;">
                     [Name], join Accelerate Summit to shape the next era of banking and payments.
                   </td>
                 </tr>
@@ -94,7 +97,7 @@
                                      height="16" 
                                      style="display: block; width: 16px; height: 16px;">
                               </td>
-                              <td style="font-size: 16px; line-height: 20px; color: #000000; white-space: nowrap;">
+                              <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 20px; color: #000000; white-space: nowrap;">
                                 May 17-20, 2026
                               </td>
                             </tr>
@@ -110,7 +113,7 @@
                                      height="16" 
                                      style="display: block; width: 16px; height: 16px;">
                               </td>
-                              <td style="font-size: 16px; line-height: 20px; color: #000000; white-space: nowrap;">
+                              <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 20px; color: #000000; white-space: nowrap;">
                                 Fairmont San Francisco
                               </td>
                             </tr>
@@ -143,11 +146,20 @@
           <!-- BANNER IMAGE -->
           <tr>
             <td style="padding: 0;">
+              <!--[if !mso]><!-->
               <img src="https://raw.githubusercontent.com/numani2c/ai-email-templates/main/your-exclusive-invitation/assets/Banner.gif" 
                    alt="Accelerate Summit Banner" 
                    width="600" 
                    height="230" 
                    style="display: block; width: 600px; height: 230px;">
+              <!--<![endif]-->
+              <!--[if mso]>
+              <img src="https://raw.githubusercontent.com/numani2c/ai-email-templates/main/your-exclusive-invitation/assets/Banner.gif" 
+                   alt="Accelerate Summit Banner" 
+                   width="600" 
+                   height="230" 
+                   style="display: block; width: 600px; height: 230px;">
+              <![endif]-->
             </td>
           </tr>
           
@@ -161,13 +173,13 @@
                   <td style="padding-bottom: 40px;">
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
-                        <td style="font-size: 16px; line-height: 24px; color: #000823; padding-bottom: 16px;">
-                          <p style="margin: 0 0 16px 0;">Hello [First Name],</p>
-                          <p style="margin: 0;">I'm reaching out with an exclusive invitation to join us at Accelerate Summit, taking place on <strong>May 17–20</strong> at the <strong>Fairmont San Francisco.</strong></p>
+                        <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823; padding-bottom: 16px;">
+                          <p style="margin: 0 0 16px 0; font-family: Arial, Helvetica, sans-serif;">Hello [First Name],</p>
+                          <p style="margin: 0; font-family: Arial, Helvetica, sans-serif;">I'm reaching out with an exclusive invitation to join us at Accelerate Summit, taking place on <strong>May 17–20</strong> at the <strong>Fairmont San Francisco.</strong></p>
                         </td>
                       </tr>
                       <tr>
-                        <td style="font-size: 16px; line-height: 24px; color: #000823;">
+                        <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823;">
                           The biggest shift for 2026 is a stronger emphasis on executive-to-executive connection with more time for C‑suite and senior leaders to compare notes, pressure‑test strategies and engage in closed‑door discussions on the forces reshaping banking and payments.
                         </td>
                       </tr>
@@ -180,7 +192,7 @@
                   <td style="padding-bottom: 40px;">
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
-                        <td style="font-size: 16px; line-height: 24px; color: #000823; font-weight: bold; padding-bottom: 16px;">
+                        <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823; font-weight: bold; padding-bottom: 16px;">
                           Your complimentary invitation includes:
                         </td>
                       </tr>
@@ -241,7 +253,7 @@
                   <td style="padding-bottom: 40px;">
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
-                        <td style="font-size: 16px; line-height: 24px; color: #000823; padding-bottom: 32px;">
+                        <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823; padding-bottom: 32px;">
                           Your invitation also includes access to our signature <strong>Awards Gala</strong>, held the evening of May 18 at the iconic Exploratorium.
                         </td>
                       </tr>
@@ -319,7 +331,7 @@
                   <td>
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
-                        <td style="font-size: 16px; line-height: 24px; color: #000823; font-weight: bold; padding-bottom: 16px;">
+                        <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823; font-weight: bold; padding-bottom: 16px;">
                           The evening features:
                         </td>
                       </tr>
@@ -332,14 +344,10 @@
                               <td style="padding-bottom: 8px;">
                                 <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                                   <tr>
-                                    <td style="width: 6px; vertical-align: top; padding-right: 6px; padding-top: 4px;">
-                                      <img src="https://raw.githubusercontent.com/numani2c/ai-email-templates/main/your-exclusive-invitation/assets/Polygon.svg" 
-                                           alt="" 
-                                           width="6" 
-                                           height="24" 
-                                           style="display: block; width: 6px; height: 24px;">
+                                    <td style="width: 6px; vertical-align: top; padding-right: 6px; padding-top: 8px;">
+                                      <div style="width: 0; height: 0; border-left: 6px solid #ff6b35; border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
                                     </td>
-                                    <td style="font-size: 16px; line-height: 24px; color: #000823;">
+                                    <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823;">
                                       A seated dinner overlooking the San Francisco waterfront
                                     </td>
                                   </tr>
@@ -350,14 +358,10 @@
                               <td style="padding-bottom: 8px;">
                                 <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                                   <tr>
-                                    <td style="width: 6px; vertical-align: top; padding-right: 6px; padding-top: 4px;">
-                                      <img src="https://raw.githubusercontent.com/numani2c/ai-email-templates/main/your-exclusive-invitation/assets/Polygon.svg" 
-                                           alt="" 
-                                           width="6" 
-                                           height="24" 
-                                           style="display: block; width: 6px; height: 24px;">
+                                    <td style="width: 6px; vertical-align: top; padding-right: 6px; padding-top: 8px;">
+                                      <div style="width: 0; height: 0; border-left: 6px solid #ff6b35; border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
                                     </td>
-                                    <td style="font-size: 16px; line-height: 24px; color: #000823;">
+                                    <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823;">
                                       Live entertainment and immersive experiences
                                     </td>
                                   </tr>
@@ -368,14 +372,10 @@
                               <td style="padding-bottom: 8px;">
                                 <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                                   <tr>
-                                    <td style="width: 6px; vertical-align: top; padding-right: 6px; padding-top: 4px;">
-                                      <img src="https://raw.githubusercontent.com/numani2c/ai-email-templates/main/your-exclusive-invitation/assets/Polygon.svg" 
-                                           alt="" 
-                                           width="6" 
-                                           height="24" 
-                                           style="display: block; width: 6px; height: 24px;">
+                                    <td style="width: 6px; vertical-align: top; padding-right: 6px; padding-top: 8px;">
+                                      <div style="width: 0; height: 0; border-left: 6px solid #ff6b35; border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
                                     </td>
-                                    <td style="font-size: 16px; line-height: 24px; color: #000823;">
+                                    <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823;">
                                       Professional photography and red‑carpet moments
                                     </td>
                                   </tr>
@@ -386,14 +386,10 @@
                               <td>
                                 <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                                   <tr>
-                                    <td style="width: 6px; vertical-align: top; padding-right: 6px; padding-top: 4px;">
-                                      <img src="https://raw.githubusercontent.com/numani2c/ai-email-templates/main/your-exclusive-invitation/assets/Polygon.svg" 
-                                           alt="" 
-                                           width="6" 
-                                           height="24" 
-                                           style="display: block; width: 6px; height: 24px;">
+                                    <td style="width: 6px; vertical-align: top; padding-right: 6px; padding-top: 8px;">
+                                      <div style="width: 0; height: 0; border-left: 6px solid #ff6b35; border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
                                     </td>
-                                    <td style="font-size: 16px; line-height: 24px; color: #000823;">
+                                    <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823;">
                                       A special awards ceremony honoring our clients' achievements:
                                     </td>
                                   </tr>
@@ -445,7 +441,7 @@
           <!-- CTA BUTTON SECTION -->
           <tr>
             <td style="background-color: #1434cb; padding: 20px 24px; text-align: center;">
-              <a href="#" style="font-size: 16px; line-height: 20px; color: #ffffff; text-decoration: none; font-weight: normal;">
+              <a href="#" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 20px; color: #ffffff; text-decoration: none; font-weight: normal;">
                 Explore Accelerate Awards →
               </a>
             </td>
@@ -458,17 +454,17 @@
                 
                 <!-- Text Content -->
                 <tr>
-                  <td style="font-size: 16px; line-height: 24px; color: #000823; padding-bottom: 16px;">
+                  <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823; padding-bottom: 16px;">
                     You'll be joining an exceptional peer group of decision‑makers from financial institutions, fintechs and payment networks—senior leaders shaping the next decade of banking and payments.
                   </td>
                 </tr>
                 <tr>
-                  <td style="font-size: 16px; line-height: 24px; color: #000823; padding-bottom: 16px;">
+                  <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823; padding-bottom: 16px;">
                     I hope you can join us for this rare opportunity to connect with fellow industry leaders in a high‑impact, invitation‑only setting.
                   </td>
                 </tr>
                 <tr>
-                  <td style="font-size: 16px; line-height: 24px; color: #000823; padding-bottom: 16px;">
+                  <td style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000823; padding-bottom: 16px;">
                     Looking forward to welcoming you,
                   </td>
                 </tr>
@@ -485,23 +481,31 @@
                 </tr>
                 <tr>
                   <td style="padding-bottom: 16px;">
-                    <p style="margin: 0; font-size: 16px; line-height: 24px; color: #000000; font-weight: bold;">Amir Wain</p>
-                    <p style="margin: 0; font-size: 14px; line-height: 20px; color: #000000;">CEO and Founder</p>
+                    <p style="margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; color: #000000; font-weight: bold;">Amir Wain</p>
+                    <p style="margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 20px; color: #000000;">CEO and Founder</p>
                   </td>
                 </tr>
                 
                 <!-- CTA Button -->
                 <tr>
                   <td align="center">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="#" style="height:44px;v-text-anchor:middle;width:200px;" arcsize="11%" strokecolor="#1434cb" fillcolor="#1434cb">
+                      <w:anchorlock/>
+                      <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">Reserve Your Spot →</center>
+                    </v:roundrect>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
                     <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                       <tr>
-                        <td style="background-color: #1434cb; border: 1px solid #1434cb; border-radius: 5px; padding: 12px 20px;">
-                          <a href="#" style="display: inline-block; font-size: 16px; font-weight: bold; line-height: 20px; color: #ffffff; text-decoration: none;">
+                        <td style="background-color: #1434cb; border: 1px solid #1434cb; border-radius: 5px; padding: 12px 20px; text-align: center;">
+                          <a href="#" style="display: inline-block; font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; line-height: 20px; color: #ffffff; text-decoration: none;">
                             Reserve Your Spot →
                           </a>
                         </td>
                       </tr>
                     </table>
+                    <!--<![endif]-->
                   </td>
                 </tr>
                 
@@ -578,7 +582,7 @@
                 
                 <!-- Copyright -->
                 <tr>
-                  <td align="center" style="font-size: 12px; line-height: 22px; color: #6b7080;">
+                  <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 22px; color: #6b7080;">
                     i2c Inc. © 2026 All Rights Reserved.
                   </td>
                 </tr>
