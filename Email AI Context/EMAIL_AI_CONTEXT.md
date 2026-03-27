@@ -127,6 +127,56 @@ Would you like me to show setup instructions? [Y/n]
 
 **Use `vscode_askQuestions` tool for interactive picker-based questions:**
 
+**⚠️ CRITICAL: Folder Name Handling**
+
+Before generating files, AI must:
+1. Get folder name from user (or auto-generate from Figma design name if blank)
+2. Convert to kebab-case if needed (lowercase, spaces→hyphens)
+3. Check if folder already exists: Use `list_dir` tool on workspace root
+4. If exists, resolve conflict by appending postfix number (-2, -3, etc.)
+5. Notify user of final folder name being used
+
+**Conflict Resolution Implementation:**
+```javascript
+// After getting folder_name from user questions:
+let folderName = userResponse.folder_name;
+
+// If blank, auto-generate from Figma design name
+if (!folderName || folderName.trim() === "") {
+  const figmaDesignName = extractedFromFigma; // e.g., "Welcome Email Template"
+  folderName = figmaDesignName
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')  // Replace non-alphanumeric with hyphens
+    .replace(/^-+|-+$/g, '');     // Remove leading/trailing hyphens
+}
+
+// Validate and normalize
+folderName = folderName
+  .toLowerCase()
+  .replace(/[^a-z0-9-]/g, '-')    // Only keep alphanumeric and hyphens
+  .replace(/-+/g, '-')             // Collapse multiple hyphens
+  .replace(/^-+|-+$/g, '');        // Remove leading/trailing hyphens
+
+// Check for conflicts and resolve
+let finalFolderName = folderName;
+let postfix = 2;
+const workspaceRoot = getCurrentWorkspaceRoot();
+
+// Use list_dir to check if folder exists
+while (folderExists(`${workspaceRoot}/${finalFolderName}`)) {
+  finalFolderName = `${folderName}-${postfix}`;
+  postfix++;
+}
+
+// Notify user if conflict was resolved
+if (finalFolderName !== folderName) {
+  console.log(`⚠️  Folder '${folderName}' already exists`);
+  console.log(`✓ Using '${finalFolderName}' for this template`);
+}
+
+// Use finalFolderName for all subsequent operations
+```
+
 ```javascript
 // Call vscode_askQuestions with all questions at once:
 vscode_askQuestions({
@@ -315,7 +365,14 @@ Please answer a few questions to configure the conversion...
 
 [VS Code opens interactive picker for each question]
 
-✓ All set! Starting conversion...
+✓ Configuration complete!
+
+� Checking folder name availability...
+   Requested: "welcome-email" (from user input OR Figma design name)
+   ⚠️  Folder 'welcome-email' already exists
+   ✓ Using 'welcome-email-2' for this template
+
+✓ Starting conversion...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -663,6 +720,10 @@ Before marking conversion complete:
 - [ ] **Interactive Q&A:** Used `vscode_askQuestions` tool for configuration questions (not text-based prompts)
 - [ ] **Gathered Info:** Asked all required questions with options and descriptions
 - [ ] **User Experience:** Provided recommended defaults marked in picker interface
+- [ ] **Folder Name:** Obtained folder name from user or auto-generated from Figma design name
+- [ ] **Folder Validation:** Converted to kebab-case and checked for conflicts
+- [ ] **Conflict Resolution:** If folder exists, appended postfix number (-2, -3, etc.)
+- [ ] **User Notification:** Informed user of final folder name being used
 - [ ] **GitHub Deployment (Strategy B1):** If assets exist locally AND Strategy B1 chosen:
   - [ ] Executed `run_in_terminal` with `deploy-to-github.ps1` script
   - [ ] Waited for deployment to complete (did not proceed until finished)
@@ -783,10 +844,10 @@ https://raw.githubusercontent.com/numani2c/ai-email-templates/main/your-exclusiv
 - Email type (Marketing, Transactional, Newsletter)
 - Target ESP (Mailchimp, SendGrid, HubSpot, Custom, etc.)
 - Brand name
-- **Template name** (derived from Figma design name or brand/email purpose)
+- **Folder name** (user-specified or auto-generated from Figma design name)
 - **Asset handling strategy** (new requirement)
 
-**Template Naming Convention:**
+**Folder Naming Convention:**
 - Use kebab-case (lowercase with hyphens)
 - Descriptive and concise
 - Examples:
@@ -795,8 +856,34 @@ https://raw.githubusercontent.com/numani2c/ai-email-templates/main/your-exclusiv
   - `password-reset`
   - `monthly-newsletter`
   - `order-confirmation`
-- **This becomes the folder name:** `[template-name]/`
-- **Used in GitHub CDN URLs:** `.../[template-name]/assets/...`
+- **This becomes the folder name:** `[folder-name]/`
+- **Used in GitHub CDN URLs:** `.../[folder-name]/assets/...`
+
+**Folder Name Resolution Logic:**
+
+1. **User provides folder name explicitly:**
+   - Use exactly as provided (after converting to kebab-case if needed)
+   - Example: User enters "Product Launch" → Use `product-launch`
+
+2. **User leaves folder name blank (auto-generate):**
+   - Extract from Figma design/frame name
+   - Convert to kebab-case (lowercase, spaces→hyphens)
+   - Example: Figma name "Welcome Email Template" → Use `welcome-email-template`
+   - Example: Figma name "OrderConfirmation" → Use `order-confirmation`
+
+3. **Folder already exists with that name (conflict resolution):**
+   - Check if folder `[folder-name]/` exists in workspace
+   - If exists, append postfix number: `-2`, `-3`, `-4`, etc.
+   - Find first available number
+   - Example: 
+     - `welcome-email/` exists → Use `welcome-email-2/`
+     - `welcome-email-2/` also exists → Use `welcome-email-3/`
+   - Notify user of the conflict and resolved name
+
+4. **Validation:**
+   - Must be valid folder name (no special chars: / \ : * ? " < > |)
+   - Must not be empty after kebab-case conversion
+   - Must not start or end with hyphen or number
 
 **Ask User if Not Provided:**
 ```
